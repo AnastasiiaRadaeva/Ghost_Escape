@@ -39,4 +39,4 @@ Game for the Mini Jam 132
 <!-- - [Anastasiia Radaeva](https://github.com/AnastasiiaRadaeva)
 -  -->
 ## License 
-[MIT License](LICENSE) 
+<!-- [MIT License](LICENSE)  -->
