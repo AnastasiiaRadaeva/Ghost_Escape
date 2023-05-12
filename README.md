@@ -1,4 +1,4 @@
-# MiniJam132
+# Ghost Escape
 Game for the Mini Jam 132
 
 
