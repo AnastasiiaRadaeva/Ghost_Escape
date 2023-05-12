@@ -8,7 +8,7 @@ Game for the Mini Jam 132
 </p>
  -->
 <p align="center">
-   <img src="https://img.shields.io/badge/Engine-Unity%202021.3.14f1-blue" alt="Unity Version">
+   <img src="https://img.shields.io/badge/Engine-Unity%202021.3.24f1-blue" alt="Unity Version">
 </p>
 
 ## About
