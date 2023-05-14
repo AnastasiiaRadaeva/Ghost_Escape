@@ -7,11 +7,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour
 {
-    public Vector2 direction;
-    public float speed = 8f;
-    public float speedMultiplier = 1f;
-    // public Vector2 initialDirection;
-    public LayerMask obstacleLayer;
+    [SerializeField] private Vector2 direction;
+    [SerializeField] private float speed = 8f;
+    [SerializeField] private float speedMultiplier = 1f;
+    [SerializeField] private LayerMask obstacleLayer;
     
     private Rigidbody2D _rigidBody;
     private Vector2 _nextDirection;
@@ -31,7 +30,6 @@ public class Movement : MonoBehaviour
     public void ResetState()
     {
         speedMultiplier = 1f;
-        // direction = initialDirection;
         _nextDirection = Vector2.zero;
         transform.position = _startPosition;
         _rigidBody.isKinematic = false;
@@ -40,11 +38,7 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        // Try to move in the next direction while it's queued to make movements
-        // more responsive
-        if (_nextDirection != Vector2.zero) {
-            SetDirection(_nextDirection);
-        }
+        SetDirection(direction);
     }
 
     private void FixedUpdate()
@@ -55,26 +49,19 @@ public class Movement : MonoBehaviour
         _rigidBody.MovePosition(position + translation);
     }
 
-    public void SetDirection(Vector2 curDirection, bool forced = false)
+    public void SetDirection(Vector2 curDirection, bool pushOff = true)
     {
-        // Only set the direction if the tile in that direction is available
-        // otherwise we set it as the next direction so it'll automatically be
-        // set when it does become available
-        if (forced || !Occupied(curDirection))
-        {
+        if (!Occupied(curDirection))
             direction = curDirection;
-            _nextDirection = Vector2.zero;
-        }
-        else
-        {
-            _nextDirection = curDirection;
-        }
+        else if (pushOff)
+            direction = curDirection * -1f;
     }
     
-    private bool Occupied(Vector2 direction)
+    private bool Occupied(Vector2 checkDirection)
     {
         // If no collider is hit then there is no obstacle in that direction
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position, Vector2.one, 0f, direction, 1.5f, obstacleLayer);
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position, 
+            new Vector2(0.3f, 0.7f), 0f, checkDirection, 1f, obstacleLayer);
         return hit.collider != null;
     }
 }
